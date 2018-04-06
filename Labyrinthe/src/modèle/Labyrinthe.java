@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package modèle;
 
 import structureDonnées.ArbreNAire;

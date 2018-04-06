@@ -18,17 +18,34 @@ public class StructureMatrice implements IExplorable{
 	 * @param tailleX
 	 * @param tailleY
 	 */
+	
+	
 	public StructureMatrice(int tailleX, int tailleY) {
 		super();
 		this.matrice = new char[tailleX][tailleY];
 		this.tailleX = tailleX;
 		this.tailleY = tailleY;
 	}
-	
+	public StructureMatrice(char[][] matrice,int tailleX, int tailleY) {
+		super();
+		this.matrice = matrice;
+		this.tailleX = tailleX;
+		this.tailleY = tailleY;
+	}
 	public void ajouterElem(char val, int x, int y){
 		this.matrice[x][y] = val;
 	}
-	
+	public void affiche () 
+	{
+		for (int i=0;i<tailleX;i++) 
+		{
+			for (int j =0;j<tailleY;j++) 
+			{
+				System.out.print(matrice[i][j]);
+			}
+			System.out.println("");
+		}
+	}
 	/**
 	 * @return the matrice
 	 */
