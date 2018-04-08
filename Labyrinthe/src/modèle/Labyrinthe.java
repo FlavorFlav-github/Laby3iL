@@ -9,19 +9,19 @@ import structureDonnées.ListeChainee;
  * @author Yanicet
  *
  */
-public class Labyrinthe<E extends IExplorable>{
-	public ListeChainee<Position> rechercheItinéraireLargeur(E structure, int posxDepart, int posyDepart, int posxArriver, int posyArriver){
+public class Labyrinthe<E extends IExplorable<Etape>>{
+	public ListeChainee<Etape> rechercheItinéraireLargeur(E structure, int posxDepart, int posyDepart, int posxArriver, int posyArriver){
 		int i;
-		Position depart = new Position(posxDepart, posyDepart);
-		Position arriver = new Position(posxArriver, posyArriver);
+		Etape depart = new Etape(posxDepart, posyDepart);
+		Etape arriver = new Etape(posxArriver, posyArriver);
 		/*La file des positions à visitées*/
-		File<Position> f;
-		ListeChainee<Position> s;
-		ArbreNAire<Position> a;
-		Position u, v;
+		File<Etape> f;
+		ListeChainee<Etape> s;
+		ArbreNAire<Etape> a;
+		Etape u, v;
 		Marqueur.setMarqueur(depart);
-		f = new File<Position>();
-		a = new ArbreNAire<Position>();
+		f = new File<Etape>();
+		a = new ArbreNAire<Etape>();
 		f.enfiler(depart);
 		a.ajouterElement(null, depart);
 		while(!f.estVide()){
@@ -35,8 +35,8 @@ public class Labyrinthe<E extends IExplorable>{
 			s = structure.EtapesSuivantes(v);
 			for(i = 0; i < s.recupererTaille(); i++){
 				u = s.recupererValeur(i);
-				a.ajouterElement(v, u);
 				if(!Marqueur.getMarqueur(u)){
+					a.ajouterElement(v, u);
 					Marqueur.setMarqueur(u);
 					f.enfiler(u);
 				}
@@ -45,8 +45,50 @@ public class Labyrinthe<E extends IExplorable>{
 		return null;
 	}
 	
-	public ListeChainee<Position> construireChemin(ArbreNAire<Position> a, Position arriver){
-		ListeChainee<Position> chemin = a.remonterArbre(arriver);
+	
+	public ListeChainee<Etape> rechercheItinéraireAEtoile(E structure, int posxDepart, int posyDepart, int posxArriver, int posyArriver){
+		int i;
+		Etape depart = new Etape(posxDepart, posyDepart);
+		Etape arriver = new Etape(posxArriver, posyArriver);
+		/*La liste des positions à visitées*/
+		ListeChainee<Etape> f;
+		ListeChainee<Etape> s;
+		ArbreNAire<Etape> a;
+		Etape u, v;
+		Marqueur.setMarqueur(depart);
+		f = new ListeChainee<Etape>();
+		a = new ArbreNAire<Etape>();
+		f.ajuterElemTrier(depart);
+		a.ajouterElement(null, depart);
+		while(!f.estVide()){
+			/*On récupère le prochain élément de la file à traiter*/
+			v = f.recupererValeur(0);
+			f.supprimerElem(0);
+			if(structure.EstArrivée(v, arriver)){
+				/*On est au point d'arriver, on retourne la liste du chemin parcourus*/
+				return construireChemin(a, v);
+			}
+			/*On récupère la liste des éléments adjacents à celui que l'on traite*/
+			s = structure.EtapesSuivantes(v);
+			for(i = 0; i < s.recupererTaille(); i++){
+				u = s.recupererValeur(i);
+				if(!Marqueur.getMarqueur(u)){
+					a.ajouterElement(v, u);
+					Marqueur.setMarqueur(u);
+					f.ajuterElemTrier(u);
+				}
+			}
+		}
+		return null;
+	}
+	
+	public double calculDistanceEuclidienne(int x1, int y1, int x2, int y2){
+		return Math.sqrt(((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)));
+	}
+	
+	
+	public ListeChainee<Etape> construireChemin(ArbreNAire<Etape> a, Etape arriver){
+		ListeChainee<Etape> chemin = a.remonterArbre(arriver);
 		chemin.inverserList();
 		return chemin;
 	}

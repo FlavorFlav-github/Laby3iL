@@ -6,7 +6,7 @@ package structureDonnées;
  *
  * @param <T>
  */
-public class ListeChainee<T> implements IListeChainee<T>{
+public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 	
 	private Element<T> tete;
 	private Element<T> queue;
@@ -298,4 +298,42 @@ public class ListeChainee<T> implements IListeChainee<T>{
 		this.queue = currElem;
 	}
 	
+	/**
+	 * Ajouter un élément dans une liste triée
+	 */
+	@Override
+	public void ajuterElemTrier(T obj1) {
+		Element<T> newElem = new Element<T>(obj1);
+		if(taille == 0){
+			this.tete = newElem;
+			this.queue = newElem;
+		}
+		else{
+			Element<T> elemTemp = this.tete;
+			while(elemTemp.getValue().compareTo(obj1) < 0){
+				elemTemp = elemTemp.getNextElem();
+			}
+			if(elemTemp.equals(this.tete)){
+				this.tete = newElem;
+				newElem.setNextElem(elemTemp);
+				elemTemp.setPrevElem(newElem);
+			}
+			else{
+				newElem.setPrevElem(elemTemp);
+				newElem.setNextElem(elemTemp.getNextElem());
+				if(newElem.getNextElem() == null) this.queue = newElem;
+				else newElem.getNextElem().setPrevElem(newElem);
+				elemTemp.setNextElem(newElem);
+			}
+		}
+		this.taille++;
+	}
+	
+	/**
+	 * Vérifie si la liste est vide, donc si la la tete point vers null
+	 */
+	@Override
+	public boolean estVide(){
+		return this.tete == null;
+	}
 }

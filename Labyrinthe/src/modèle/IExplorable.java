@@ -9,7 +9,7 @@ import structureDonnées.ListeChainee;
  * @author Yanicet
  *
  */
-public interface IExplorable {
-	ListeChainee<Position> EtapesSuivantes(Position pos);
-	boolean EstArrivée(Position posAct, Position posArr);
+public interface IExplorable<T> {
+	ListeChainee<T> EtapesSuivantes(T pos);
+	boolean EstArrivée(T posAct, T posArr);
 }

@@ -4,13 +4,14 @@
 package structureDonnées;
 
 import modèle.IExplorable;
-import modèle.Position;
+import modèle.IMesurable;
+import modèle.Etape;
 
 /**
  * @author Yanicet
  *
  */
-public class StructureMatrice implements IExplorable{
+public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	private char[][] matrice;
 	private int tailleX, tailleY;
 	/**
@@ -91,31 +92,31 @@ public class StructureMatrice implements IExplorable{
 	 * @return res La liste des positions adjacentes 
 	 */
 	@Override
-	public ListeChainee<Position> EtapesSuivantes(Position pos) {
-		ListeChainee<Position> res = new ListeChainee<Position>();
+	public ListeChainee<Etape> EtapesSuivantes(Etape pos) {
+		ListeChainee<Etape> res = new ListeChainee<Etape>();
 		/*On vérifie que la position en x+1 n'est pas en dehors de la matrice*/
 		if(pos.getX()+1 < tailleX){
 			/*On vérifie que la position est bien une case vide/explorable*/
 			if((matrice[pos.getX() + 1][pos.getY()]) == ' ')
-				res.ajouterElem(new Position(pos.getX() + 1, pos.getY()));
+				res.ajouterElem(new Etape(pos.getX() + 1, pos.getY()));
 		}
 		/*On vérifie que la position en y+1 n'est pas en dehors de la matrice*/
 		if(pos.getY()+1 < tailleY){
 			/*On vérifie que la position est bien une case vide/explorable*/
 			if((matrice[pos.getX()][pos.getY()+1]) == ' ')
-				res.ajouterElem(new Position(pos.getX(), pos.getY() + 1));
+				res.ajouterElem(new Etape(pos.getX(), pos.getY() + 1));
 		}
 		/*On vérifie que la position en x-1 n'est pas en dehors de la matrice*/
 		if(pos.getX()-1 >= 0){
 			/*On vérifie que la position est bien une case vide/explorable*/
 			if((matrice[pos.getX() - 1][pos.getY()]) == ' ')
-				res.ajouterElem(new Position(pos.getX() - 1, pos.getY()));
+				res.ajouterElem(new Etape(pos.getX() - 1, pos.getY()));
 		}
 		/*On vérifie que la position en y-1 n'est pas en dehors de la matrice*/
 		if(pos.getY()-1 >= 0){
 			/*On vérifie que la position est bien une case vide/explorable*/
 			if((matrice[pos.getX()][pos.getY() - 1]) == ' ')
-				res.ajouterElem(new Position(pos.getX(), pos.getY() - 1));
+				res.ajouterElem(new Etape(pos.getX(), pos.getY() - 1));
 		}
 		return res;
 	}
@@ -130,8 +131,12 @@ public class StructureMatrice implements IExplorable{
 	 * est égal au x et y de la position d'arrivé sinon faux
 	 */
 	@Override
-	public boolean EstArrivée(Position posAct, Position posArr) {
+	public boolean EstArrivée(Etape posAct, Etape posArr) {
 		return ((posAct.getX() == posArr.getX()) && (posAct.getY() == posArr.getY()));
+	}
+	@Override
+	public double distance(Etape etapeD, Etape etapeA) {
+		return 1;
 	}
 	
 }

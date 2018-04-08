@@ -3,8 +3,9 @@
  */
 package vue;
 
+import modèle.Etape;
 import modèle.Labyrinthe;
-import modèle.Position;
+import modèle.Etape;
 import structureDonnées.ListeChainee;
 import structureDonnées.StructureMatrice;
 
@@ -19,7 +20,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 	
-		StructureMatrice str = new StructureMatrice(9,4);
+		/*StructureMatrice str = new StructureMatrice(9,4);
 		str.ajouterElem(' ', 0, 0);
 		str.ajouterElem(' ', 0, 1);
 		str.ajouterElem(' ', 1, 0);
@@ -51,8 +52,14 @@ public class Main {
 		str.ajouterElem('d', 4, 3);
 		
 		Labyrinthe<StructureMatrice> lab = new Labyrinthe<StructureMatrice>();
-		ListeChainee<Position> lis = lab.rechercheItinéraireLargeur(str, 0,0, 6,2);
-		lis.affiche();
+		ListeChainee<Etape> lis = lab.rechercheItinéraireLargeur(str, 0,0, 6,2);
+		lis.affiche();*/
+		
+		ListeChainee<Integer> in = new ListeChainee<Integer>();
+		in.ajuterElemTrier(6);
+		in.ajuterElemTrier(5);
+		in.ajuterElemTrier(7);
+		in.affiche();
 	}
 
 }

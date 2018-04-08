@@ -16,11 +16,11 @@ import structureDonnées.ListeChainee;
  * <b>Remarque : <i>Cette solution ne permet que des marqueurs binaires</i></b>
  */
 public class Marqueur {
-	private static IListeChainee<Position> listMarqueurs = new ListeChainee<Position>();
-	public static void setMarqueur(Position pos){
+	private static IListeChainee<Etape> listMarqueurs = new ListeChainee<Etape>();
+	public static void setMarqueur(Etape pos){
 		listMarqueurs.ajouterElem(pos);
 	}
-	public static boolean getMarqueur(Position pos){
+	public static boolean getMarqueur(Etape pos){
 		return listMarqueurs.estDansListe(pos);
 	}
 }
