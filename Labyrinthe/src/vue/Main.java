@@ -19,8 +19,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	
-		/*StructureMatrice str = new StructureMatrice(9,4);
+		StructureMatrice str = new StructureMatrice(9,4);
+		StructureMatrice str = new StructureMatrice(9,4);
 		str.ajouterElem(' ', 0, 0);
 		str.ajouterElem(' ', 0, 1);
 		str.ajouterElem(' ', 1, 0);
@@ -53,7 +53,9 @@ public class Main {
 		
 		Labyrinthe<StructureMatrice> lab = new Labyrinthe<StructureMatrice>();
 		ListeChainee<Etape> lis = lab.rechercheItinéraireLargeur(str, 0,0, 6,2);
-		lis.affiche();*/
+		lis.affiche();
+		
+		lab.tracerChemin(lis, str);
 		
 		ListeChainee<Integer> in = new ListeChainee<Integer>();
 		in.ajuterElemTrier(6);

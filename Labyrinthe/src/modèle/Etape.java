@@ -10,8 +10,8 @@ package modèle;
 public class Etape implements Comparable<Etape>, IPositionnable{
 	private int x;
 	private int y;
-	private int distanceDepuisDepart;
-	private int distanceEstimeePourArrivee;
+	private double distanceDepuisDepart;
+	private double distanceEstimeePourArrivee;
 	
 	/**
 	 * @param x
@@ -57,13 +57,13 @@ public class Etape implements Comparable<Etape>, IPositionnable{
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
+		final double prime = 31;
+		double result = 1;
 		result = prime * result + distanceDepuisDepart;
 		result = prime * result + distanceEstimeePourArrivee;
 		result = prime * result + x;
 		result = prime * result + y;
-		return result;
+		return (int)result;
 	}
 
 	/* (non-Javadoc)
@@ -92,28 +92,28 @@ public class Etape implements Comparable<Etape>, IPositionnable{
 	/**
 	 * @return the distanceDepuisDepart
 	 */
-	public int getDistanceDepuisDepart() {
+	public double getDistanceDepuisDepart() {
 		return distanceDepuisDepart;
 	}
 
 	/**
 	 * @param distanceDepuisDepart the distanceDepuisDepart to set
 	 */
-	public void setDistanceDepuisDepart(int distanceDepuisDepart) {
+	public void setDistanceDepuisDepart(double distanceDepuisDepart) {
 		this.distanceDepuisDepart = distanceDepuisDepart;
 	}
 
 	/**
 	 * @return the distanceEstimeePourArrivee
 	 */
-	public int getDistanceEstimeePourArrivee() {
+	public double getDistanceEstimeePourArrivee() {
 		return distanceEstimeePourArrivee;
 	}
 
 	/**
 	 * @param distanceEstimeePourArrivee the distanceEstimeePourArrivee to set
 	 */
-	public void setDistanceEstimeePourArrivee(int distanceEstimeePourArrivee) {
+	public void setDistanceEstimeePourArrivee(double distanceEstimeePourArrivee) {
 		this.distanceEstimeePourArrivee = distanceEstimeePourArrivee;
 	}
 }

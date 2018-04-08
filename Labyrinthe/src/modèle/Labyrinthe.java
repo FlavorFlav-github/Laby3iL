@@ -4,12 +4,13 @@ package modèle;
 import structureDonnées.ArbreNAire;
 import structureDonnées.File;
 import structureDonnées.ListeChainee;
+import structureDonnées.StructureMatrice;
 
 /**
  * @author Yanicet
  *
  */
-public class Labyrinthe<E extends IExplorable<Etape>>{
+public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 	public ListeChainee<Etape> rechercheItinéraireLargeur(E structure, int posxDepart, int posyDepart, int posxArriver, int posyArriver){
 		int i;
 		Etape depart = new Etape(posxDepart, posyDepart);
@@ -75,6 +76,7 @@ public class Labyrinthe<E extends IExplorable<Etape>>{
 				if(!Marqueur.getMarqueur(u)){
 					a.ajouterElement(v, u);
 					Marqueur.setMarqueur(u);
+					u.setDistanceDepuisDepart(v.getDistanceDepuisDepart() + structure.distance(v, u));
 					f.ajuterElemTrier(u);
 				}
 			}
@@ -91,5 +93,12 @@ public class Labyrinthe<E extends IExplorable<Etape>>{
 		ListeChainee<Etape> chemin = a.remonterArbre(arriver);
 		chemin.inverserList();
 		return chemin;
+	}
+	
+	public void tracerChemin(ListeChainee<Etape> chemin, StructureMatrice s){
+		for(int i = 0; i< chemin.recupererTaille(); i++){
+			s.ajouterElem('.', chemin.getElem(i).getValue().getX(), chemin.getElem(i).getValue().getY());
+		}
+		s.affiche();		
 	}
 }

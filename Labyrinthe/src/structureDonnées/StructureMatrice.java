@@ -134,6 +134,10 @@ public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	public boolean EstArrivée(Etape posAct, Etape posArr) {
 		return ((posAct.getX() == posArr.getX()) && (posAct.getY() == posArr.getY()));
 	}
+	
+	/**
+	 * Methode qui retourne la distance entre deux etapes adjacentes
+	 */
 	@Override
 	public double distance(Etape etapeD, Etape etapeA) {
 		return 1;

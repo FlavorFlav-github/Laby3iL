@@ -7,7 +7,7 @@ package structureDonnées;
  * @author Yanicet
  *
  */
-public class ArbreNAire<T> implements IArbreNAire<T>{
+public class ArbreNAire<T extends Comparable<T>> implements IArbreNAire<T>{
 	private ElementArbre<T> racine;
 	private int nombreElement;
 	

@@ -7,7 +7,7 @@ package structureDonnées;
  * @author yassl
  *
  */
-public class ElementArbre<T>{
+public class ElementArbre<T extends Comparable<T>> implements Comparable<ElementArbre<T>>{
 	private ListeChainee<ElementArbre<T>> nextElem;
 	private ElementArbre<T> prevElem;
 	private T value;
@@ -53,5 +53,9 @@ public class ElementArbre<T>{
 	 */
 	public void setValue(T value) {
 		this.value = value;
+	}
+	@Override
+	public int compareTo(ElementArbre<T> o) {
+		return value.compareTo(o.getValue());
 	}
 }
