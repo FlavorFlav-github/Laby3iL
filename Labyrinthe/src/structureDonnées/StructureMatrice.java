@@ -14,6 +14,10 @@ import modèle.Etape;
 public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	private char[][] matrice;
 	private int tailleX, tailleY;
+	private int arriverX ;
+	private int arriverY ;
+	private int departX ;
+	private int departY ;
 	/**
 	 * @param matrice
 	 * @param tailleX
@@ -38,11 +42,11 @@ public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	}
 	public void affiche () 
 	{
-		for (int i=0;i<tailleX;i++) 
+		for (int i=0;i<tailleY;i++) 
 		{
-			for (int j =0;j<tailleY;j++) 
+			for (int j =0;j<tailleX;j++) 
 			{
-				System.out.print(matrice[i][j]);
+				System.out.print(matrice[j][i] + "  ");
 			}
 			System.out.println("");
 		}
@@ -132,7 +136,7 @@ public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	 */
 	@Override
 	public boolean EstArrivée(Etape posAct, Etape posArr) {
-		return ((posAct.getX() == posArr.getX()) && (posAct.getY() == posArr.getY()));
+		return calculDistanceEuclidienne(posAct.getX(), posAct.getY(), posArr.getX(), posArr.getY()) == 0;
 	}
 	
 	/**
@@ -141,6 +145,65 @@ public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	@Override
 	public double distance(Etape etapeD, Etape etapeA) {
 		return 1;
+	}
+	
+	public double calculDistanceEuclidienne(int x1, int y1, int x2, int y2){
+		return Math.sqrt(((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)));
+	}
+	
+	public void remplirChemin(ListeChainee<Etape> chemin){
+		for(int i = 0 ; i < chemin.recupererTaille(); i++){
+			ajouterElem('.', chemin.recupererValeur(i).getX(), chemin.recupererValeur(i).getY());
+		}
+	}
+	
+	/**
+	 * @return the arriverX
+	 */
+	public int getArriverX() {
+		return arriverX;
+	}
+	/**
+	 * @param arriverX the arriverX to set
+	 */
+	public void setArriverX(int arriverX) {
+		this.arriverX = arriverX;
+	}
+	/**
+	 * @return the arriverY
+	 */
+	public int getArriverY() {
+		return arriverY;
+	}
+	/**
+	 * @param arriverY the arriverY to set
+	 */
+	public void setArriverY(int arriverY) {
+		this.arriverY = arriverY;
+	}
+	/**
+	 * @return the departX
+	 */
+	public int getDepartX() {
+		return departX;
+	}
+	/**
+	 * @param departX the departX to set
+	 */
+	public void setDepartX(int departX) {
+		this.departX = departX;
+	}
+	/**
+	 * @return the departY
+	 */
+	public int getDepartY() {
+		return departY;
+	}
+	/**
+	 * @param departY the departY to set
+	 */
+	public void setDepartY(int departY) {
+		this.departY = departY;
 	}
 	
 }

@@ -56,7 +56,6 @@ public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 		ListeChainee<Etape> s;
 		ArbreNAire<Etape> a;
 		Etape u, v;
-		Marqueur.setMarqueur(depart);
 		f = new ListeChainee<Etape>();
 		a = new ArbreNAire<Etape>();
 		f.ajuterElemTrier(depart);
@@ -65,6 +64,7 @@ public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 			/*On récupère le prochain élément de la file à traiter*/
 			v = f.recupererValeur(0);
 			f.supprimerElem(0);
+			
 			if(structure.EstArrivée(v, arriver)){
 				/*On est au point d'arriver, on retourne la liste du chemin parcourus*/
 				return construireChemin(a, v);
@@ -73,10 +73,13 @@ public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 			s = structure.EtapesSuivantes(v);
 			for(i = 0; i < s.recupererTaille(); i++){
 				u = s.recupererValeur(i);
-				if(!Marqueur.getMarqueur(u)){
-					a.ajouterElement(v, u);
-					Marqueur.setMarqueur(u);
+				
+				if(!a.estDansArbre(u)){
+					
 					u.setDistanceDepuisDepart(v.getDistanceDepuisDepart() + structure.distance(v, u));
+					u.setDistanceEstimeePourArrivee(arrondir(calculDistanceEuclidienne(u.getX(), u.getY(), arriver.getX(), arriver.getY()), 2));
+					
+					a.ajouterElement(v, u);
 					f.ajuterElemTrier(u);
 				}
 			}
@@ -88,8 +91,7 @@ public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 		return Math.sqrt(((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)));
 	}
 	
-	
-	public ListeChainee<Etape> construireChemin(ArbreNAire<Etape> a, Etape arriver){
+	private ListeChainee<Etape> construireChemin(ArbreNAire<Etape> a, Etape arriver){
 		ListeChainee<Etape> chemin = a.remonterArbre(arriver);
 		chemin.inverserList();
 		return chemin;
@@ -100,5 +102,10 @@ public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 			s.ajouterElem('.', chemin.getElem(i).getValue().getX(), chemin.getElem(i).getValue().getY());
 		}
 		s.affiche();		
+	}
+	
+	private double arrondir(double nombre,double nbApVirg)
+	{
+		return(double)((int)(nombre * Math.pow(10,nbApVirg) + .5)) / Math.pow(10,nbApVirg);
 	}
 }

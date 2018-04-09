@@ -32,7 +32,6 @@ public class ArbreNAire<T extends Comparable<T>> implements IArbreNAire<T>{
 		/*Si l'arbre est vide ajoute l'élément à la racine*/
 		if(racine == null){
 			racine = newElem;
-			this.nombreElement++;
 		}
 		else{
 			/*L'ajout ne peut se faire que si l'élement pere est renseigné et si il existe*/
@@ -48,6 +47,7 @@ public class ArbreNAire<T extends Comparable<T>> implements IArbreNAire<T>{
 				}
 			}
 		}
+		this.nombreElement++;
 		
 	}
 
@@ -93,7 +93,6 @@ public class ArbreNAire<T extends Comparable<T>> implements IArbreNAire<T>{
 		if(listElem != null){
 			for(int i = 0; i<listElem.recupererTaille(); i++){
 				value = listElem.recupererValeur(i);
-				System.out.println(value.getValue().toString());
 				if(value.getNextElem() != null){
 					parcoursRecursifAffiche(value.getNextElem());
 				}
@@ -133,4 +132,7 @@ public class ArbreNAire<T extends Comparable<T>> implements IArbreNAire<T>{
 		return res;
 	}
 
+	public boolean estDansArbre(T elem){
+		return recupererElem(elem) != null;
+	}
 }

@@ -110,33 +110,43 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 	 */
 	@Override
 	public boolean supprimerElem(int i) {
-		boolean sens;
-		Element<T> currElem;
+		boolean sens = false;
+		Element<T> currElem = null;
 		if(i >= taille) return false;
-		if(i >= (taille / 2)){
-			sens = true;
-			currElem = this.queue;
+		
+		if(taille == 1){
+			this.taille = 0;
+			this.tete = null;
+			this.queue = null;
+			return true;
 		}
 		else{
-			sens = false;
-			currElem = this.tete;
-		}
-		for(int j = 0 ;  j < (taille+1 / 2); j++){
-			if(sens){
-				if(i == (taille - 1 - j)){
-					deleteFromQueue(currElem);
-					this.taille--;
-					return true;
-				}
-				currElem = currElem.getPrevElem();
+			
+			if(i >= (taille / 2)){
+				sens = true;
+				currElem = this.queue;
 			}
 			else{
-				if(i == j){
-					deleteFromTete(currElem);
-					this.taille--;
-					return true;
+				sens = false;
+				currElem = this.tete;
+			}
+			for(int j = 0 ;  j < (taille+1 / 2); j++){
+				if(sens){
+					if(i == (taille - 1 - j)){
+						deleteFromQueue(currElem);
+						this.taille--;
+						return true;
+					}
+					currElem = currElem.getPrevElem();
 				}
-				currElem = currElem.getNextElem();
+				else{
+					if(i == j){
+						deleteFromTete(currElem);
+						this.taille--;
+						return true;
+					}
+					currElem = currElem.getNextElem();
+				}
 			}
 		}
 		return false;
@@ -310,21 +320,48 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		}
 		else{
 			Element<T> elemTemp = this.tete;
-			while(elemTemp.getValue().compareTo(obj1) < 0){
-				elemTemp = elemTemp.getNextElem();
-			}
-			if(elemTemp.equals(this.tete)){
-				this.tete = newElem;
-				newElem.setNextElem(elemTemp);
-				elemTemp.setPrevElem(newElem);
-			}
-			else{
-				newElem.setPrevElem(elemTemp);
-				newElem.setNextElem(elemTemp.getNextElem());
-				if(newElem.getNextElem() == null) this.queue = newElem;
-				else newElem.getNextElem().setPrevElem(newElem);
-				elemTemp.setNextElem(newElem);
-			}
+				while(obj1.compareTo(elemTemp.getValue()) > 0){
+					if(elemTemp.getNextElem() == null) break;
+					elemTemp = elemTemp.getNextElem();
+				}
+				if(elemTemp.equals(this.tete)){
+					if(obj1.compareTo(elemTemp.getValue()) < 0){
+						this.tete = newElem;
+						newElem.setNextElem(elemTemp);
+						elemTemp.setPrevElem(newElem);
+					}
+					else{
+						newElem.setPrevElem(elemTemp);
+						if(this.queue.equals(elemTemp)) this.queue = newElem;
+						if(elemTemp.getNextElem() != null){
+							newElem.setNextElem(elemTemp.getNextElem());
+							elemTemp.getNextElem().setPrevElem(newElem);
+						}
+						elemTemp.setNextElem(newElem);
+					}
+				}
+				else{
+					if(elemTemp.equals(this.queue)){
+						if(obj1.compareTo(elemTemp.getValue()) > 0){
+							this.queue = newElem;
+							newElem.setPrevElem(elemTemp);
+							elemTemp.setNextElem(newElem);
+						}
+						else{
+							newElem.setNextElem(elemTemp);
+							newElem.setPrevElem(elemTemp.getPrevElem());
+							elemTemp.getPrevElem().setNextElem(newElem);
+							elemTemp.setPrevElem(newElem);
+						}
+					}
+					else{
+						newElem.setNextElem(elemTemp);
+						newElem.setPrevElem(elemTemp.getPrevElem());
+						elemTemp.getPrevElem().setNextElem(newElem);
+						elemTemp.setPrevElem(newElem);
+					}
+				}
+			
 		}
 		this.taille++;
 	}

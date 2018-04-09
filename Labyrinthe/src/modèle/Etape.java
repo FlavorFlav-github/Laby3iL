@@ -41,29 +41,34 @@ public class Etape implements Comparable<Etape>, IPositionnable{
 
 	@Override
 	public String toString(){
-		return "(x : " + x + ", y : " + y + ")";
+		return "(x : " + x + ", y : " + y + ",  Distance Départ : " + distanceDepuisDepart + ", Distance Arriver : " + distanceEstimeePourArrivee + ")";
 	}
 	@Override
 	public int compareTo(Etape o) {
 		if	((distanceDepuisDepart + distanceEstimeePourArrivee) > 
 			(o.getDistanceDepuisDepart() + o.getDistanceEstimeePourArrivee()))return 1;
-		else if((distanceDepuisDepart + distanceEstimeePourArrivee) < 
+		else if((distanceDepuisDepart + distanceEstimeePourArrivee) <
 				(o.getDistanceDepuisDepart() + o.getDistanceEstimeePourArrivee()))return -1;
 		else return 0;
 	}
 	
+
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		final double prime = 31;
-		double result = 1;
-		result = prime * result + distanceDepuisDepart;
-		result = prime * result + distanceEstimeePourArrivee;
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(distanceDepuisDepart);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(distanceEstimeePourArrivee);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + x;
 		result = prime * result + y;
-		return (int)result;
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -71,21 +76,22 @@ public class Etape implements Comparable<Etape>, IPositionnable{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!(obj instanceof Etape)) {
 			return false;
+		}
 		Etape other = (Etape) obj;
-		if (distanceDepuisDepart != other.distanceDepuisDepart)
+		if (x != other.x) {
 			return false;
-		if (distanceEstimeePourArrivee != other.distanceEstimeePourArrivee)
+		}
+		if (y != other.y) {
 			return false;
-		if (x != other.x)
-			return false;
-		if (y != other.y)
-			return false;
+		}
 		return true;
 	}
 

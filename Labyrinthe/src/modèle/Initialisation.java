@@ -14,30 +14,17 @@ import structureDonnées.StructureMatrice;
 
 public class Initialisation 
 {	
-	static String name;
-	static char[][] Matrice;
-	static int departX =	-1;
-	static int departY = 	-1;
-	static int arriveeX =	-1;
-	static int arriveeY =	-1;
-	static int tailleX = 	-1;
-	static int tailleY =	-1;
+	protected static String name;
+	protected static char[][] Matrice;
+	protected static int departX =	-1;
+	protected static int departY = 	-1;
+	protected static int arriveeX =	-1;
+	protected static int arriveeY =	-1;
+	protected static int tailleX = 	-1;
+	protected static int tailleY =	-1;
 
-	/*public static void main (String Args[]) throws IOException 
-	{
-		Path John = Paths.get("C:\\Users\\Anicet\\Desktop\\map2.txt");
-		LectureFichier(John);
-		for (int i=0;i<tailleX;i++) 
-		{
-			for (int j =0;j<tailleY;j++) 
-			{
-				System.out.print(Matrice[i][j]);
-			}
-			System.out.println("");
-		}
-	}*/
 
-	public static void LectureFichier (Path fichier) throws IOException 
+	public static StructureMatrice LectureFichier (Path fichier)
 	{
 		String[] Splitter = new String[2];
 		if(Files.exists(fichier)) 
@@ -53,31 +40,38 @@ public class Initialisation
 						else if (i==1) 
 						{
 							Splitter=Sfichier.get(i).split("\t");
-							departX=Integer.parseInt(Splitter[0]);
-							departY=Integer.parseInt(Splitter[1]);
+							departX=Integer.parseInt(Splitter[0])-1;
+							departY=Integer.parseInt(Splitter[1])-1;
+							
 						}
 						else if (i==2) 
 						{
 							Splitter=Sfichier.get(i).split("\t");
-							arriveeX=Integer.parseInt(Splitter[0]);
-							arriveeY=Integer.parseInt(Splitter[1]);
+							arriveeX=Integer.parseInt(Splitter[0])-1;
+							arriveeY=Integer.parseInt(Splitter[1])-1;
 						}
 						else if (i==3) 
 						{
 							Splitter=Sfichier.get(i).split("\t");
 							tailleX=Integer.parseInt(Splitter[0])-2;
 							tailleY=Integer.parseInt(Splitter[1]);
+							
 							Matrice  = new char[tailleX][tailleY]; 
 						}
 						else if (i>4) 
 						{
 							for (int j=0;j<Sfichier.get(i).length();j++) 
 							{
-								Matrice[i-5][j] =Sfichier.get(i).charAt(j);
+								Matrice[i-5][j] = Sfichier.get(i).charAt(j);
 							}
 						}
 					}
 					StructureMatrice Anderson = new StructureMatrice(Matrice,tailleX, tailleY);
+					Anderson.setArriverX(arriveeX);
+					Anderson.setArriverY(arriveeY);
+					Anderson.setDepartX(departX);
+					Anderson.setDepartY(departY);
+					return Anderson;
 				}
 				catch(IOException e) 
 				{
@@ -87,6 +81,7 @@ public class Initialisation
 			else System.out.println("Impossible de lire le fichier");
 		}
 		else System.out.println("Impossible d'ouvrir le fichier");
+		return null;
 	}
 
 
