@@ -42,11 +42,15 @@ public class StructureMatrice implements IExplorable<Etape>, IMesurable<Etape> {
 	}
 	public void affiche () 
 	{
-		for (int i=0;i<tailleY;i++) 
+		
+		for (int i=0;i<tailleX+2;i++) 
 		{
-			for (int j =0;j<tailleX;j++) 
+			for (int j =0;j<tailleY;j++) 
 			{
-				System.out.print(matrice[j][i] + "  ");
+				//if (i==0)System.out.println("ø");
+				//else if (i == tailleX-1)System.out.println("ø");
+				//else
+				System.out.print(matrice[i][j] + "  ");
 			}
 			System.out.println("");
 		}

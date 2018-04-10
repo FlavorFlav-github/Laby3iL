@@ -24,12 +24,13 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Path fichier = Paths.get("C:\\Users\\yassl\\Downloads\\map4.txt");
+		Path fichier = Paths.get("C:\\Users\\a.gorgerin\\Downloads\\mapEchec.txt");
 		
 		StructureMatrice str = Initialisation.LectureFichier(fichier);
-		
+		//str.affiche();
 		Labyrinthe<StructureMatrice> lab = new Labyrinthe<StructureMatrice>();
-		ListeChainee<Etape> lis = lab.rechercheItinéraireAEtoile(str, str.getDepartX(),str.getDepartY(), str.getArriverX(),str.getArriverY());
+		ListeChainee<Etape> lis = new ListeChainee<Etape>();
+		lis = lab.rechercheItinéraireAEtoile(str, str.getDepartX(),str.getDepartY(), str.getArriverX(),str.getArriverY());
 		lis.affiche();
 		str.remplirChemin(lis);
 		str.affiche();

@@ -84,7 +84,7 @@ public class Labyrinthe<E extends IExplorable<Etape> & IMesurable<Etape>>{
 				}
 			}
 		}
-		return null;
+		return new ListeChainee<Etape>();
 	}
 	
 	public double calculDistanceEuclidienne(int x1, int y1, int x2, int y2){

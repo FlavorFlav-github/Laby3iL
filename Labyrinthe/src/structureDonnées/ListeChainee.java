@@ -7,7 +7,7 @@ package structureDonnées;
  * @param <T>
  */
 public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
-	
+
 	private Element<T> tete;
 	private Element<T> queue;
 	private int taille;
@@ -36,7 +36,7 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		}
 		this.taille++;
 	}
-	
+
 	/**
 	 * Ajoute un élément de type T a l'indice d'entrer
 	 * 
@@ -113,7 +113,7 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		boolean sens = false;
 		Element<T> currElem = null;
 		if(i >= taille) return false;
-		
+
 		if(taille == 1){
 			this.taille = 0;
 			this.tete = null;
@@ -121,7 +121,7 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 			return true;
 		}
 		else{
-			
+
 			if(i >= (taille / 2)){
 				sens = true;
 				currElem = this.queue;
@@ -162,7 +162,7 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		}
 		if(obj1.getPrevElem() != null)obj1.getPrevElem().setNextElem(obj1.getNextElem());
 	}
-	
+
 	public void deleteFromQueue(Element<T> obj1){
 		if(obj1.getNextElem() != null)obj1.getNextElem().setPrevElem(obj1.getPrevElem());
 		if(obj1.getPrevElem() != null){
@@ -208,11 +208,11 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 				if(i == j) return currElem.getValue();
 				currElem = currElem.getNextElem();
 			}
-			
+
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Récdupère un élément de la liste par son indice
 	 * 
@@ -247,11 +247,11 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 				if(i == j) return currElem;
 				currElem = currElem.getNextElem();
 			}
-			
+
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Recupère la taille de la liste
 	 * 
@@ -261,12 +261,14 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 	public int recupererTaille() {
 		return this.taille;
 	}
-	
+
 	/**
 	 * Affiche les valeurs des éléments de la liste
 	 */
 	@Override
 	public void affiche() {
+		if(this.taille > 0)
+		{	
 		Element<T> currElem = this.tete;
 		System.out.print("[");
 		while(currElem != null){
@@ -275,6 +277,8 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 			currElem = currElem.getNextElem();
 		}
 		System.out.println("]");
+		}
+		else System.out.println("Pas de chemin possible");
 	}
 	@Override
 	public boolean estDansListe(T obj1) {
@@ -283,13 +287,13 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		for(int i = 0 ;  i < (taille+1) / 2; i++){
 			if(currElemTete.getValue().equals(obj1)) return true;
 			else currElemTete = currElemTete.getNextElem();
-			
+
 			if(currElemQueue.getValue().equals(obj1)) return true;
 			else currElemQueue = currElemQueue.getPrevElem();
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Methode permettant d'inverser la liste
 	 */
@@ -307,7 +311,7 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		this.tete = this.queue;
 		this.queue = currElem;
 	}
-	
+
 	/**
 	 * Ajouter un élément dans une liste triée
 	 */
@@ -320,39 +324,32 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 		}
 		else{
 			Element<T> elemTemp = this.tete;
-				while(obj1.compareTo(elemTemp.getValue()) > 0){
-					if(elemTemp.getNextElem() == null) break;
-					elemTemp = elemTemp.getNextElem();
-				}
-				if(elemTemp.equals(this.tete)){
-					if(obj1.compareTo(elemTemp.getValue()) < 0){
-						this.tete = newElem;
-						newElem.setNextElem(elemTemp);
-						elemTemp.setPrevElem(newElem);
-					}
-					else{
-						newElem.setPrevElem(elemTemp);
-						if(this.queue.equals(elemTemp)) this.queue = newElem;
-						if(elemTemp.getNextElem() != null){
-							newElem.setNextElem(elemTemp.getNextElem());
-							elemTemp.getNextElem().setPrevElem(newElem);
-						}
-						elemTemp.setNextElem(newElem);
-					}
+			while(obj1.compareTo(elemTemp.getValue()) > 0){
+				if(elemTemp.getNextElem() == null) break;
+				elemTemp = elemTemp.getNextElem();
+			}
+			if(elemTemp.equals(this.tete)){
+				if(obj1.compareTo(elemTemp.getValue()) < 0){
+					this.tete = newElem;
+					newElem.setNextElem(elemTemp);
+					elemTemp.setPrevElem(newElem);
 				}
 				else{
-					if(elemTemp.equals(this.queue)){
-						if(obj1.compareTo(elemTemp.getValue()) > 0){
-							this.queue = newElem;
-							newElem.setPrevElem(elemTemp);
-							elemTemp.setNextElem(newElem);
-						}
-						else{
-							newElem.setNextElem(elemTemp);
-							newElem.setPrevElem(elemTemp.getPrevElem());
-							elemTemp.getPrevElem().setNextElem(newElem);
-							elemTemp.setPrevElem(newElem);
-						}
+					newElem.setPrevElem(elemTemp);
+					if(this.queue.equals(elemTemp)) this.queue = newElem;
+					if(elemTemp.getNextElem() != null){
+						newElem.setNextElem(elemTemp.getNextElem());
+						elemTemp.getNextElem().setPrevElem(newElem);
+					}
+					elemTemp.setNextElem(newElem);
+				}
+			}
+			else{
+				if(elemTemp.equals(this.queue)){
+					if(obj1.compareTo(elemTemp.getValue()) > 0){
+						this.queue = newElem;
+						newElem.setPrevElem(elemTemp);
+						elemTemp.setNextElem(newElem);
 					}
 					else{
 						newElem.setNextElem(elemTemp);
@@ -361,11 +358,18 @@ public class ListeChainee<T extends Comparable<T>> implements IListeChainee<T>{
 						elemTemp.setPrevElem(newElem);
 					}
 				}
-			
+				else{
+					newElem.setNextElem(elemTemp);
+					newElem.setPrevElem(elemTemp.getPrevElem());
+					elemTemp.getPrevElem().setNextElem(newElem);
+					elemTemp.setPrevElem(newElem);
+				}
+			}
+
 		}
 		this.taille++;
 	}
-	
+
 	/**
 	 * Vérifie si la liste est vide, donc si la la tete point vers null
 	 */

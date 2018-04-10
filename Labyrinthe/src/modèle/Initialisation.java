@@ -10,47 +10,50 @@ import java.util.List;
 import structureDonnées.StructureMatrice;
 
 
-
+/**
+ * @author Anicet.G
+ *
+ */
 
 public class Initialisation 
 {	
 	protected static String name;
 	protected static char[][] Matrice;
-	protected static int departX =	-1;
-	protected static int departY = 	-1;
+	protected static int departX =	-1;		
+	protected static int departY = 	-1;	
 	protected static int arriveeX =	-1;
 	protected static int arriveeY =	-1;
 	protected static int tailleX = 	-1;
 	protected static int tailleY =	-1;
 
 
-	public static StructureMatrice LectureFichier (Path fichier)
+	public static StructureMatrice LectureFichier (Path fichier)		//Fonction permettant de créer la matrice à partir du fichier texte
 	{
 		String[] Splitter = new String[2];
-		if(Files.exists(fichier)) 
+		if(Files.exists(fichier)) 	
 		{     
-			if(Files.isReadable(fichier)) 
+			if(Files.isReadable(fichier)) 								
 			{
 				try
 				{
-					List<String> Sfichier = Files.readAllLines(fichier);
-					for(int i =0;i<Sfichier.size()-1;i++) 
+					List<String> Sfichier = Files.readAllLines(fichier);		//On récupère toutes les lignes
+					for(int i =0;i<Sfichier.size()-1;i++) 						//on parcours le fichier sauf la dernière ligne
 					{
-						if(i==0) name =Sfichier.get(0);
-						else if (i==1) 
+						if(i==0) name =Sfichier.get(0);							//récupération du nom du labyrinthe
+						else if (i==1)											//récupération du point de départ
 						{
 							Splitter=Sfichier.get(i).split("\t");
 							departX=Integer.parseInt(Splitter[0])-1;
 							departY=Integer.parseInt(Splitter[1])-1;
 							
 						}
-						else if (i==2) 
+						else if (i==2) 											//récupération du point d'arrivée
 						{
 							Splitter=Sfichier.get(i).split("\t");
 							arriveeX=Integer.parseInt(Splitter[0])-1;
 							arriveeY=Integer.parseInt(Splitter[1])-1;
 						}
-						else if (i==3) 
+						else if (i==3) 											//récupération des dimensions
 						{
 							Splitter=Sfichier.get(i).split("\t");
 							tailleX=Integer.parseInt(Splitter[0])-2;
@@ -58,7 +61,7 @@ public class Initialisation
 							
 							Matrice  = new char[tailleX][tailleY]; 
 						}
-						else if (i>4) 
+						else if (i>4) 											//on recopie chaque caractère dans un tableau de caractère représentant la matrice
 						{
 							for (int j=0;j<Sfichier.get(i).length();j++) 
 							{
@@ -66,7 +69,7 @@ public class Initialisation
 							}
 						}
 					}
-					StructureMatrice Anderson = new StructureMatrice(Matrice,tailleX, tailleY);
+					StructureMatrice Anderson = new StructureMatrice(Matrice,tailleX, tailleY);		//création de la matrice à partir de ses dimensions et du tableau
 					Anderson.setArriverX(arriveeX);
 					Anderson.setArriverY(arriveeY);
 					Anderson.setDepartX(departX);
